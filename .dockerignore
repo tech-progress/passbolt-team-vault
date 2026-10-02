@@ -1,4 +1,5 @@
 **
+!LICENSE
 !Dockerfile
 !scripts/
 !scripts/entrypoint.sh

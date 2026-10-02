@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 — 2026-10-02
+
+- Include the scoped recipe MIT notice in both runtime and disposable SMTP-fixture build contexts; upstream licenses remain unchanged.
+
 ## 1.0.0 — 2026-10-02 (unpublished)
 
 - Pin Passbolt CE 5.16.0-1 rootless image and MariaDB 11.4.10 by manifest digest.
