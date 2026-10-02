@@ -1,0 +1,9 @@
+**
+!Dockerfile
+!scripts/
+!scripts/entrypoint.sh
+!scripts/validate-runtime.php
+!scripts/healthcheck.sh
+!scripts/state-identity.sh
+!scripts/cake.sh
+!scripts/smtp-fixture.php

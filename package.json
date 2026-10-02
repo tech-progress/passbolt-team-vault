@@ -1,0 +1,14 @@
+{
+  "name": "railway-passbolt-team-vault",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "bash scripts/verify.sh",
+    "smoke": "bash scripts/smoke.sh",
+    "graph": "railway-iac-ts .railway/railway.ts",
+    "audit": "node scripts/audit-template.mjs",
+    "restore-draft": "node scripts/restore-template-draft.mjs"
+  },
+  "devDependencies": { "railway": "3.6.0" }
+}

@@ -1,0 +1,38 @@
+{
+  "MariaDB": {
+    "PORT": "Private database port, never a public TCP proxy.",
+    "MARIADB_DATABASE": "Passbolt database initialized on a fresh volume.",
+    "MARIADB_USER": "Least-privilege application database user.",
+    "MARIADB_PASSWORD": "Railway-generated 32-character secret; app references this exact value.",
+    "MARIADB_ROOT_PASSWORD": "Independent Railway-generated root secret; never passed to the app."
+  },
+  "Passbolt": {
+    "PORT": "Fixed rootless nginx HTTP port behind Railway TLS.",
+    "RAILWAY_RUN_UID": "Ownership-only root bootstrap; permanently drops to UID/GID 33 before Passbolt.",
+    "TEMPLATE_MODE": "Production only on Railway; local-test is deliberately rejected there.",
+    "APP_FULL_BASE_URL": "Canonical HTTPS origin; replace with verified custom domain if needed.",
+    "DATASOURCES_DEFAULT_HOST": "MariaDB private IPv6 service domain, not localhost.",
+    "DATASOURCES_DEFAULT_PORT": "Private MariaDB port.",
+    "DATASOURCES_DEFAULT_DATABASE": "Reference to MariaDB database name.",
+    "DATASOURCES_DEFAULT_USERNAME": "Reference to MariaDB application user.",
+    "DATASOURCES_DEFAULT_PASSWORD": "Reference to the same generated application DB password.",
+    "SECURITY_SALT": "Railway-generated stable 64-character encryption/signing salt; back up separately.",
+    "PASSBOLT_KEY_EMAIL": "Required valid email for server GPG key generation; retain identity.",
+    "PASSBOLT_KEY_NAME": "Server GPG key display identity.",
+    "EMAIL_DEFAULT_FROM": "Required real verified sender address; no placeholder sender.",
+    "EMAIL_DEFAULT_FROM_NAME": "Invitation sender display name.",
+    "EMAIL_TRANSPORT_DEFAULT_HOST": "Required genuine SMTP provider; outbound SMTP needs Railway Pro or above.",
+    "EMAIL_TRANSPORT_DEFAULT_PORT": "Provider STARTTLS port, normally 587; implicit TLS not supported by this recipe.",
+    "EMAIL_TRANSPORT_DEFAULT_USERNAME": "Required SMTP authentication identity.",
+    "EMAIL_TRANSPORT_DEFAULT_PASSWORD": "Required private SMTP credential; never put it in the reusable draft.",
+    "EMAIL_TRANSPORT_DEFAULT_TLS": "Must be true in production; verifies SMTP TLS certificates.",
+    "PASSBOLT_SSL_FORCE": "Must be true behind the Railway HTTPS edge.",
+    "PASSBOLT_SECURITY_COOKIE_SECURE": "Must be true in production; secure session cookie.",
+    "PASSBOLT_SECURITY_FULLBASEURL_ENFORCE": "Locks app origin to prevent Host-header poisoning.",
+    "PASSBOLT_SECURITY_PREVENT_EMAIL_ENUMERATION": "Reduces unauthenticated user enumeration.",
+    "PASSBOLT_PLUGINS_SELF_REGISTRATION_ENABLED": "Must be false: no public signup; use private register_user.",
+    "PASSBOLT_PLUGINS_SMTP_SETTINGS_ENABLED": "Must be false: only environment-controlled SMTP is in scope.",
+    "PASSBOLT_PLUGINS_JWT_AUTHENTICATION_ENABLED": "JWT keys are persisted with server GPG keys in one app volume.",
+    "DEBUG": "Must be false; never expose debugging data or exception details."
+  }
+}

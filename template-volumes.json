@@ -1,0 +1,1 @@
+{"Passbolt":{"mountPath":"/var/lib/passbolt","sizeMB":1000},"MariaDB":{"mountPath":"/var/lib/mysql","sizeMB":5000}}

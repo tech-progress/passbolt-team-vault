@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.local/
+backups/
+*.sql
+*.tar
+*.asc
+draft*.json
+graph*.json
+!scripts/fixtures/*.json

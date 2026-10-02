@@ -1,0 +1,17 @@
+services:
+  app:
+    restart: 'no'
+    volumes:
+      - type: volume
+        source: app-state
+        target: /var/lib/passbolt
+        volume: {nocopy: true}
+    depends_on:
+      smtp: {condition: service_started}
+  db:
+    restart: 'no'
+  smtp:
+    build: {context: ., target: smtp-fixture}
+    networks: [private]
+    user: '33:33'
+    tmpfs: [/tmp, '/spool:uid=33,gid=33,mode=0700']

@@ -1,0 +1,14 @@
+{
+  "directory": "passbolt-team-vault",
+  "name": "Passbolt team vault",
+  "category": "Authentication",
+  "description": "Invite-only Passbolt CE sharing with private MariaDB and durable keys.",
+  "icon": "https://raw.githubusercontent.com/passbolt/passbolt_api/v5.16.0/webroot/favicon.svg",
+  "origins": [
+    {"name":"Passbolt CE","url":"https://www.passbolt.com"},
+    {"name":"Passbolt CE API source","url":"https://github.com/passbolt/passbolt_api"},
+    {"name":"Passbolt Docker source","url":"https://github.com/passbolt/passbolt_docker"},
+    {"name":"MariaDB","url":"https://mariadb.org"}
+  ],
+  "publicationStatus": "unpublished; license and human acceptance gates pending"
+}

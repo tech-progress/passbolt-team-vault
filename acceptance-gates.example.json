@@ -1,0 +1,12 @@
+{
+  "localSmoke": {"passed":false,"evidence":""},
+  "railwayFreshVolumeAndPrivateIPv6": {"passed":false,"evidence":""},
+  "externalSmtpAndInvitationDelivery": {"passed":false,"evidence":""},
+  "browserTwoUserEncryptedSharing": {"passed":false,"evidence":""},
+  "unrelatedUserResourceDenial": {"passed":false,"evidence":""},
+  "realTlsAndTrustedForwarding": {"passed":false,"evidence":""},
+  "coordinatedUserResourceRestore": {"passed":false,"evidence":""},
+  "capacityAndSoak": {"passed":false,"evidence":""},
+  "correspondingSourceAndLicenseReview": {"passed":false,"evidence":""},
+  "storedDraftAndMarketplaceAudit": {"passed":false,"evidence":""}
+}

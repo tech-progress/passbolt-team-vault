@@ -1,0 +1,59 @@
+services:
+  db:
+    image: mariadb:11.4.10@sha256:3b4dfcc32247eb07adbebec0793afae2a8eafa6860ec523ee56af4d3dec42f7f
+    command: [mariadbd, '--bind-address=0.0.0.0,::']
+    environment:
+      MARIADB_DATABASE: passbolt
+      MARIADB_USER: passbolt
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:?Generate at least 32 random characters}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?Generate an independent root password}
+    volumes: [database:/var/lib/mysql]
+    networks: [private]
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+  app:
+    build: {context: ., target: production}
+    user: '0:0'
+    depends_on:
+      db: {condition: service_healthy}
+    environment:
+      PORT: '8080'
+      TEMPLATE_MODE: ${TEMPLATE_MODE:-production}
+      APP_FULL_BASE_URL: ${APP_FULL_BASE_URL:?Set canonical HTTPS origin}
+      DATASOURCES_DEFAULT_HOST: db
+      DATASOURCES_DEFAULT_PORT: '3306'
+      DATASOURCES_DEFAULT_DATABASE: passbolt
+      DATASOURCES_DEFAULT_USERNAME: passbolt
+      DATASOURCES_DEFAULT_PASSWORD: ${MARIADB_PASSWORD:?Required}
+      SECURITY_SALT: ${SECURITY_SALT:?Generate at least 64 random characters}
+      PASSBOLT_KEY_EMAIL: ${PASSBOLT_KEY_EMAIL:?Set server GPG identity email}
+      PASSBOLT_KEY_NAME: ${PASSBOLT_KEY_NAME:-Passbolt team vault}
+      EMAIL_DEFAULT_FROM: ${EMAIL_DEFAULT_FROM:?Set real verified sender}
+      EMAIL_DEFAULT_FROM_NAME: ${EMAIL_DEFAULT_FROM_NAME:-Passbolt team vault}
+      EMAIL_TRANSPORT_DEFAULT_HOST: ${EMAIL_TRANSPORT_DEFAULT_HOST:?Set SMTP provider}
+      EMAIL_TRANSPORT_DEFAULT_PORT: ${EMAIL_TRANSPORT_DEFAULT_PORT:-587}
+      EMAIL_TRANSPORT_DEFAULT_USERNAME: ${EMAIL_TRANSPORT_DEFAULT_USERNAME:-}
+      EMAIL_TRANSPORT_DEFAULT_PASSWORD: ${EMAIL_TRANSPORT_DEFAULT_PASSWORD:-}
+      EMAIL_TRANSPORT_DEFAULT_TLS: ${EMAIL_TRANSPORT_DEFAULT_TLS:-true}
+      PASSBOLT_SSL_FORCE: ${PASSBOLT_SSL_FORCE:-true}
+      PASSBOLT_SECURITY_COOKIE_SECURE: ${PASSBOLT_SECURITY_COOKIE_SECURE:-true}
+      PASSBOLT_SECURITY_FULLBASEURL_ENFORCE: 'true'
+      PASSBOLT_SECURITY_PREVENT_EMAIL_ENUMERATION: 'true'
+      PASSBOLT_PLUGINS_SELF_REGISTRATION_ENABLED: 'false'
+      PASSBOLT_PLUGINS_SMTP_SETTINGS_ENABLED: 'false'
+      PASSBOLT_PLUGINS_JWT_AUTHENTICATION_ENABLED: 'true'
+      DEBUG: 'false'
+    volumes: [app-state:/var/lib/passbolt]
+    networks: [private, outbound]
+    ports: ['127.0.0.1:18424:8080']
+    restart: unless-stopped
+volumes:
+  database:
+  app-state:
+networks:
+  private: {internal: true}
+  outbound:
